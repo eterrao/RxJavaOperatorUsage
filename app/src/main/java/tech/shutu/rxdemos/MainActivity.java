@@ -1,6 +1,5 @@
 package tech.shutu.rxdemos;
 
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,8 +16,8 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.sql.ResultSet;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -171,24 +170,37 @@ public class MainActivity extends AppCompatActivity {
         Observable.create(new Observable.OnSubscribe<String>() {
             @Override
             public void call(Subscriber<? super String> subscriber) {
-                subscriber.onNext("this is create");
+                if (!subscriber.isUnsubscribed()) {
+                    subscriber.onNext("我是创建者传过来的参数");
+                }
             }
-        }).subscribe(new Subscriber<String>() {
-            @Override
-            public void onCompleted() {
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<String>() {
+                               @Override
+                               public void onCompleted() {
 
-            }
+                               }
 
-            @Override
-            public void onError(Throwable e) {
+                               @Override
+                               public void onError(Throwable e) {
 
-            }
+                               }
 
-            @Override
-            public void onNext(String result) {
-                Snackbar.make(view, result + "", Snackbar.LENGTH_LONG).show();
-            }
-        });
+                               @Override
+                               public void onNext(String s) {
+                                   Toast.makeText(MainActivity.this, s + " subscriber", Toast.LENGTH_SHORT).show();
+                               }
+                           }
+                /*
+                new Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        Toast.makeText(MainActivity.this, s + " action", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                */
+                );
     }
 
     public void createOpJust(final View view) {
@@ -394,6 +406,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
     public static class RxListAdapter extends BaseAdapter {
         private List<String> list = Arrays.asList(titleList);
