@@ -1,6 +1,9 @@
 package tech.shutu.rxdemos;
 
+<<<<<<< HEAD
 import android.nfc.Tag;
+=======
+>>>>>>> 0a803e53823dc9d0b68f5f94fb289386284cddb4
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,8 +20,13 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+<<<<<<< HEAD
 
 import java.sql.ResultSet;
+=======
+import android.widget.Toast;
+
+>>>>>>> 0a803e53823dc9d0b68f5f94fb289386284cddb4
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -171,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
         Observable.create(new Observable.OnSubscribe<String>() {
             @Override
             public void call(Subscriber<? super String> subscriber) {
+<<<<<<< HEAD
                 subscriber.onNext("this is create");
             }
         }).subscribe(new Subscriber<String>() {
@@ -189,6 +198,39 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(view, result + "", Snackbar.LENGTH_LONG).show();
             }
         });
+=======
+                if (!subscriber.isUnsubscribed()) {
+                    subscriber.onNext("我是创建者传过来的参数");
+                }
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<String>() {
+                               @Override
+                               public void onCompleted() {
+
+                               }
+
+                               @Override
+                               public void onError(Throwable e) {
+
+                               }
+
+                               @Override
+                               public void onNext(String s) {
+                                   Toast.makeText(MainActivity.this, s + " subscriber", Toast.LENGTH_SHORT).show();
+                               }
+                           }
+                /*
+                new Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        Toast.makeText(MainActivity.this, s + " action", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                */
+                );
+>>>>>>> 0a803e53823dc9d0b68f5f94fb289386284cddb4
     }
 
     public void createOpJust(final View view) {
@@ -395,6 +437,10 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0a803e53823dc9d0b68f5f94fb289386284cddb4
     public static class RxListAdapter extends BaseAdapter {
         private List<String> list = Arrays.asList(titleList);
 

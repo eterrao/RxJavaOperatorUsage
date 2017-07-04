@@ -111,7 +111,10 @@
   <component name="ProjectType">
     <option name="id" value="Android" />
   </component>
+<<<<<<< HEAD
   <component name="SvnConfiguration">
     <configuration>$USER_HOME$/.subversion</configuration>
   </component>
+=======
+>>>>>>> 0a803e53823dc9d0b68f5f94fb289386284cddb4
 </project>
